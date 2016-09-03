@@ -1,0 +1,13 @@
+<%= simple_form_for(@game) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.label 'Введите идентификатор пользователя' %>
+    <%= f.input :opponent_id %>
+    <%= f.hidden_field :creater_id, :value => current_user.id %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

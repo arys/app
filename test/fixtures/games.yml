@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  creater_id: 1
+  opponent_id: 1
+  subject_id: 1
+  status: false
+  creater_scores: 1
+  opponent_scores: 1
+
+two:
+  creater_id: 1
+  opponent_id: 1
+  subject_id: 1
+  status: false
+  creater_scores: 1
+  opponent_scores: 1
