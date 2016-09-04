@@ -1,0 +1,21 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>ID Соперника</th>
+      <th>Статус игры</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invitations.each do |game| %>
+      <tr>
+        <td><%= game.id %></td>
+        <td><%= game.creater_id %></td>
+        <td><%= game.status %></td>
+        <td><%= link_to 'В игру', game %></td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

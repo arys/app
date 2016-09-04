@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Device
 gem 'devise', '~> 4.1', '>= 4.1.1'
 
+# Gon (for waiting)
+gem 'gon', '~> 6.1'
+
 # Bootstrap
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS

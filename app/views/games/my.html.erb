@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>ID Соперника</th>
+      <th>Статус игры</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @my_games.each do |game| %>
+      <tr>
+        <td><%= game.id %></td>
+        <td><%= game.opponent_id %></td>
+        <td><%= game.status %></td>
+        <td><%= link_to 'В игру', game %></td>
+        <td><%= link_to 'Удалить', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

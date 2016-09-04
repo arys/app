@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "App" %></title>
+    <%= include_gon(watch: true) %>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag "application", :media => "all" %>
@@ -45,10 +46,14 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">App</a>
+        <a class="navbar-brand" href= <%= root_path %> >App</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
           <% if signed_in? %>
+            <li><%= link_to "Профиль", profile_path  %></li>
+            <li><%= link_to "Новая игра", new_game_path  %></li>
+            <li><%= link_to "Мои игры (" + @my_games_count.to_s + ')', my_games_path %></li>
+            <li><%= link_to "Приглашения (" + @invitations_count.to_s + ')', invitations_path  %></li>
             <li><%= link_to "Выйти", destroy_user_session_path, method: 'DELETE'  %></li>
           <% else %>
             <li><%= link_to "Войти", user_session_path  %></li>
@@ -60,7 +65,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-9" style="text-align: center" >
+        <div class="col-lg-9">
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
