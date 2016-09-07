@@ -1,0 +1,19 @@
+<% rand_subjects = Subject.limit(2).order("RANDOM()") %>
+<%= simple_form_for :choose_subject, {url: request.original_url + '/change_subject'} do |sub| %>
+  <%= sub.error_notification %>
+
+  <div class="form-inputs">
+    <%= sub.label 'Выберите предмет' %>
+    <% rand_subjects.each do |subject| %>
+    	<div id="subject">
+    		<%= sub.label(:subject, subject.text) %>
+    		<%= sub.radio_button(:subject, subject.id) %>
+    	</div>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= sub.button :submit %>
+  </div>
+<% end %>
+<h1>Выбор предмета</h1>

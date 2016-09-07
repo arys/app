@@ -8,3 +8,19 @@ renewGameStatus = (status) ->
 		location.reload()
 
 gon.watch('game_status', interval: 1000, renewGameStatus)
+
+checkPlayingStatus = (status) ->
+	if status == true
+		$('#playing_status').text('Соперник играет...')
+	else
+		location.reload()
+
+gon.watch('playing_status', interval: 10000, checkPlayingStatus)
+
+checkPlayingStatusRev = (status) ->
+	if status == false
+		$('#playing_status').text('Соперник играет...')
+	else if status == true
+		location.reload()
+
+gon.watch('playing_status_rev', interval: 10000, checkPlayingStatusRev)

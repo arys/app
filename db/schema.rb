@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160904122019) do
+ActiveRecord::Schema.define(version: 20160904165950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,14 +27,18 @@ ActiveRecord::Schema.define(version: 20160904122019) do
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
 
   create_table "games", force: :cascade do |t|
-    t.boolean  "status",          default: false
-    t.integer  "creater_scores"
-    t.integer  "opponent_scores"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.boolean  "status",           default: false
+    t.integer  "creater_scores",   default: 0
+    t.integer  "opponent_scores",  default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "creater_id"
     t.integer  "opponent_id"
     t.integer  "subject_id"
+    t.integer  "current_question"
+    t.boolean  "playing"
+    t.integer  "games_count",      default: 0
+    t.integer  "current_subject"
   end
 
   create_table "questions", force: :cascade do |t|

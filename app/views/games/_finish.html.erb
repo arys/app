@@ -1,0 +1,24 @@
+<div style="text-align: center; margin-top: 10%; margin-bottom: 10%;" >
+	<h3>Игра закончена со счетом</h3>
+	<h3><%= @game.creater_scores.to_s + ' : ' + @game.opponent_scores.to_s %></h3>
+	<% if @game.creater_scores > @game.opponent_scores %>
+		<% if @game.creater == current_user.id %>
+			<h3>Вы выиграли</h3>
+		<% else %>
+			<h3>Вы проиграли</h3>
+		<% end %>
+	<% elsif @game.creater_scores < @game.opponent_scores %>
+		<% if @game.creater == current_user.id %>
+			<h3>Вы проиграли</h3>
+		<% else %>
+			<h3>Вы выиграли</h3>
+		<% end %>
+	<% elsif @game.creater_scores == @game.opponent_scores %>
+		<h3>Ничья</h3>
+	<% end %>
+	<% session[:game] = '' %>
+	<% session[:quiz] = '' %>
+	<% session[:wait] = '' %>
+	<%= link_to 'Перейти на главную >>', root_path %>
+</div> 
+<h1>Финиш</h1>

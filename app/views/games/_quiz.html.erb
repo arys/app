@@ -1,0 +1,8 @@
+<% if session[:quiz] == 'choose_subject' %>
+	<%= render 'choose_subject' %>
+<% elsif session[:quiz] == 'quiz' %>
+	<%= render 'quiz_form' %>
+<% else %>
+	<h1>Ошибка</h1>
+<% end %>
+<h1>Выбор теста</h1>

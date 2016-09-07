@@ -1,0 +1,18 @@
+<% sub = Subject.find(@game.current_subject) %>
+<%= simple_form_for :quiz, {url: request.original_url + '/valid_quiz2'} do |q| %>
+  <%= q.error_notification %>
+
+  <div class="form-inputs">
+    <%= q.label sub.text %>
+    <% sub.questions[@game.current_question].answers.each do |answer| %>
+    	<div id="answer">
+			<%= q.radio_button(:answer, answer.correct.to_s) %>
+			<%= q.label(:answer, answer.text) %>
+		</div>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= q.button :submit %>
+  </div>
+<% end %>

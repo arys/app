@@ -1,1 +1,21 @@
-<h1>Игра началась</h1>
+<% if session[:game] == 'creater' %>
+	<% session[:game] = 'waiting_opponent' %>
+	<% session[:first] = 'true' %>
+	<%= render 'waiting_opponent' %>
+<% elsif session[:game] == 'opponent' %>
+	<% @game.update_attribute(:playing, true) %>
+	<% session[:game] = 'quiz' %>
+	<% session[:quiz] = 'choose_subject' %>
+	<%= render 'quiz' %>
+<% elsif session[:game] == 'waiting_opponent' %>
+	<%= render 'waiting_opponent' %>
+<% elsif session[:game] == 'quiz' %>
+	<% @game.update_attribute(:playing, true) %>
+	<%= render 'quiz' %>
+<% elsif session[:game] == 'quiz2' %>
+	<% @game.update_attribute(:playing, true) %>
+	<%= render 'quiz2' %>
+<% elsif session[:game] == 'finish' %>
+	<%= render 'finish' %>
+<% end %>
+<h1>Начало игры</h1>

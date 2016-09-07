@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem "rails_12factor", group: :production
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7'
@@ -28,6 +29,9 @@ gem 'devise', '~> 4.1', '>= 4.1.1'
 
 # Gon (for waiting)
 gem 'gon', '~> 6.1'
+
+# Session and Cookies cheacker
+gem 'rails-footnotes', '~> 4.0'
 
 # Bootstrap
 gem "therubyracer"
@@ -58,3 +62,4 @@ group :development do
   gem 'spring'
 end
 
+ruby "2.3.0"

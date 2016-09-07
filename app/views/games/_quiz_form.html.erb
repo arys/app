@@ -1,0 +1,21 @@
+<% num = rand(0..1) %>
+<% sub = Subject.find(@game.current_subject) %>
+<%= simple_form_for :quiz, {url: request.original_url + '/valid'} do |q| %>
+  <%= q.error_notification %>
+
+  <div class="form-inputs">
+    <%= q.label  sub.text%>
+    <% sub.questions[num].answers.each do |answer| %>
+    	<div id="answer">
+			<%= q.radio_button(:answer, answer.correct.to_s) %>
+			<%= q.label(:answer, answer.text) %>
+		</div>
+    <% end %>
+    <%= q.hidden_field :current_question, :value => num %>
+  </div>
+
+  <div class="form-actions">
+    <%= q.button :submit %>
+  </div>
+<% end %>
+<h1>Тест</h1>

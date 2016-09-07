@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :change_subject, :valid, :valid_quiz2]
   before_action :authenticate_user!
 
   # GET /games
@@ -16,15 +16,17 @@ class GamesController < ApplicationController
         if @game.status != true
           gon.watch.game_status = @game.status
           @rendering = 'waiting'
+          session[:game] = 'creater'
         else
           @rendering = 'game'
         end
 
     elsif @game.opponent_id == current_user.id
-
+      
         if @game.status != true
           @game.update_attribute(:status, true)
           @rendering = 'game'
+          session[:game] = 'opponent'
         else
           @rendering = 'game'
         end
@@ -88,6 +90,100 @@ class GamesController < ApplicationController
 
   def invitations
     @invitations = Game.where(opponent_id: current_user)
+  end
+
+  def change_subject
+    @game.update_attribute(:current_subject, params[:choose_subject][:subject])
+    session[:quiz] = 'quiz'
+    redirect_to @game
+  end
+
+  def valid
+    if @game.games_count == 9
+      @game.increment!(:games_count, 1)
+
+      if params[:quiz][:answer] == 'true'
+        if @game.creater_id == current_user.id
+          @game.increment!(:creater_scores, 1)
+        elsif @game.opponent_id == current_user.id
+          @game.increment!(:opponent_scores, 1)
+        end
+      end
+
+      session[:game] = 'finish'
+      redirect_to @game
+    else
+      if params[:quiz][:answer] == 'true'
+        if @game.creater_id == current_user.id
+          @game.update_attribute(:playing, false)
+          @game.increment!(:creater_scores, 1)
+          @game.increment!(:games_count, 1)
+          @game.update_attribute(:current_question, params[:quiz][:current_question])
+          session[:game] = 'waiting_opponent'
+          session[:wait] = 'load'
+          flash[:notice] = 'Правильный ответ'
+          redirect_to @game
+        elsif @game.opponent_id == current_user.id
+          @game.update_attribute(:playing, false)
+          @game.increment!(:opponent_scores, 1)
+          @game.increment!(:games_count, 1)
+          @game.update_attribute(:current_question, params[:quiz][:current_question])
+          session[:game] = 'waiting_opponent'
+          session[:wait] = 'load'
+          flash[:notice] = 'Правильный ответ'
+          redirect_to @game
+        end
+      else
+        @game.update_attribute(:playing, false)
+        @game.increment!(:games_count, 1)
+        @game.update_attribute(:current_question, params[:quiz][:current_question])
+        session[:game] = 'waiting_opponent'
+        session[:wait] = 'load'
+        flash[:error] = 'Не правильный ответ'
+        redirect_to @game
+      end
+    end
+  end
+
+  def valid_quiz2
+    if @game.games_count == 9
+      @game.increment!(:games_count, 1)
+
+      if params[:quiz][:answer] == 'true'
+        if @game.creater_id == current_user.id
+          @game.increment!(:creater_scores, 1)
+        elsif @game.opponent_id == current_user.id
+          @game.increment!(:opponent_scores, 1)
+        end
+      end
+
+      session[:game] = 'finish'
+      redirect_to @game
+    else
+      if params[:quiz][:answer] == 'true'
+        if @game.creater_id == current_user.id
+          @game.increment!(:games_count, 1)
+          @game.increment!(:creater_scores, 1)
+          session[:game] = 'quiz'
+          session[:quiz] = 'choose_subject'
+          flash[:notice] = 'Правильный ответ'
+          redirect_to @game
+        elsif @game.opponent_id == current_user.id
+          @game.increment!(:games_count, 1)
+          @game.increment!(:opponent_scores, 1)
+          session[:game] = 'quiz'
+          session[:quiz] = 'choose_subject'
+          flash[:notice] = 'Правильный ответ'
+          redirect_to @game
+        end
+      else
+        @game.increment!(:games_count, 1)
+        session[:game] = 'quiz'
+        session[:quiz] = 'choose_subject'
+        flash[:error] = 'Не правильный ответ'
+        redirect_to @game
+      end
+    end
   end
 
   private

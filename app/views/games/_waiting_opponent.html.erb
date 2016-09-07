@@ -1,0 +1,31 @@
+<% if @game.games_count == 10 %>
+	<% session[:game] = 'finish' %>
+	<script type="text/javascript">location.reload();</script>
+<% end %>
+
+<% if @game.playing == false %>
+	<% if session[:first] == 'true' %>
+		<% session[:test] = 'error3' %>
+		<% session[:first] = 'false' %>
+		<% session[:game] = 'quiz2' %>
+		<% @game.update_attribute(:playing, true) %>
+		<script type="text/javascript">location.reload();</script>
+	<% elsif session[:wait] == 'load' %>
+		<% session[:test] = 'error2' %>
+		<div id="playing_status" style="font-size: 250%"></div>
+		<% session[:wait] = 'done' %>
+	<% else %>
+		<% @game.update_attribute(:playing, true) %>
+		<% session[:game] = 'quiz2' %>
+		<% session[:quiz] = 'choose_subject' %>
+		<% session[:test] = 'error' %>
+		<script type="text/javascript">location.reload();</script>
+	<% end %>
+<% end %>
+
+<% controller.gon.watch.playing_status = @game.playing %>
+<div style="text-align: center; margin-top: 10%; margin-bottom: 10%;">
+	<div id="playing_status" style="font-size: 250%"></div>
+	<h3>Текущий счет</h3>
+	<h3><%= @game.creater_scores.to_s + ' : ' + @game.opponent_scores.to_s %></h3>
+</div>

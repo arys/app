@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   # Example of regular route:
   get 'my_games' => 'games#my'
   get 'invitations' => 'games#invitations'
+  post 'games/:id/change_subject' => 'games#change_subject'
+  post 'games/:id/valid' => 'games#valid'
+  post 'games/:id/valid_quiz2' => 'games#valid_quiz2'
+  get 'games/:id/wait' => 'games#wait'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   get 'profile' => 'pages#profile'
